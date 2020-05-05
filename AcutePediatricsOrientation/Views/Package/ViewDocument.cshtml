@@ -1,0 +1,23 @@
+﻿@model AcutePediatricsOrientation.ViewModels.DocumentsViewModel
+
+@{
+    ViewData["Title"] = "ViewDocument";
+}
+
+@if (Model.DocumentTypeId == (int)ProjectEnum.DocumentType.PDF)
+{
+    <script>
+        $(document).ready(function () {
+            $('.hi').click(function () { alert("hi") });
+            $('.media').media({ width: 1200, height: 660 });
+        });
+    </script>
+    <h1>@Model.Name</h1>
+    <a class="media" href="@Model.Path">PDF File</a>
+}
+else
+{
+    <div style="text-align:center; margin-top: 100px;">
+        <iframe width="800" height="450" src="@Model.Path" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+}

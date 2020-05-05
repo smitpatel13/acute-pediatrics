@@ -1,0 +1,18 @@
+﻿@model AcutePediatricsOrientation.ViewModels.StaffListViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@foreach (var user in Model.Users)
+{
+    <div style="margin-top: 50px;" class="container">
+        <div class="col-lg-2"><a asp-controller="Staff" asp-action="StaffPackage" asp-route-id="@user.UserId">@user.Name</a></div>
+        <div class="col-lg-6">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: @user.Progress%;" aria-valuenow="@user.Progress" aria-valuemin="0" aria-valuemax="100">@user.Progress%</div>
+            </div>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<script>
+    $(document).ready(function () {
+        $('.hi').click(function () { alert("hi")});
+        $('.media').media({ width: 1200, height: 660 });
+    });
+</script>
+
+<h1>This is a sample pdf page</h1>
+<a class="media" href="~/trainingfiles/sample.pdf">PDF File</a>
+<div style="text-align: center">    
+    <input type="checkbox">
+    <span>Did you finish reading the pdf file?</span>
+    <div>
+        <a class="btn btn-primary">Submit</a>
+    </div>
+</div>

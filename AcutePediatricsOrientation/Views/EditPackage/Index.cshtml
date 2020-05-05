@@ -1,0 +1,80 @@
+﻿@model AcutePediatricsOrientation.ViewModels.PackageViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+<p style="margin-top: 20px; margin-bottom: 20px;">
+    <a class="btn btn-default btn-md" asp-action="CreateCategory"><i class="glyphicon glyphicon-plus-sign"></i> Create Category</a>
+</p>
+
+@if (Model.Categories.Count > 0)
+{
+    @foreach (var category in Model.Categories)
+    {
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                @Html.DisplayFor(modelItem => category.Name)
+                <span class="pull-right">
+                    <a class="btn btn-default btn-xs" asp-action="EditCategory" asp-route-id="@category.Id"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a class="btn btn-default btn-xs" asp-action="DeleteCategory" asp-route-id="@category.Id"><i class="glyphicon glyphicon-trash"></i></a>
+                </span>
+            </div>
+            <div class="panel-body">
+                <p style="margin-bottom: 20px">
+                    <a class="btn btn-default btn-xs" asp-action="CreateTopic" asp-route-id="@category.Id"><i class="glyphicon glyphicon-plus-sign"></i> Create New Topic</a>
+                </p>
+                @if (category.Topics.Any())
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="50%">
+                                    Topic
+                                </th>
+                                <th width="50%">
+                                    Documents / Links
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var topic in category.Topics)
+                            {
+                                <tr>
+                                    <td>
+                                        <p>
+                                            <span style="display: inline-block; width: 400px;">@Html.DisplayFor(modelItem => topic.Name)</span>
+                                            <a class="btn btn-default btn-xs" asp-action="EditTopic" asp-route-id="@topic.Id"><i class="glyphicon glyphicon-pencil"></i></a>
+                                            <a class="btn btn-default btn-xs" asp-action="DeleteTopic" asp-route-id="@topic.Id"><i class="glyphicon glyphicon-trash"></i></a>
+                                        </p>
+                                    </td>
+
+                                    <td>
+                                        <p style="text-align:center"><a class="btn btn-default btn-xs" asp-action="CreateDocument" asp-route-id="@topic.Id"><i class="glyphicon glyphicon-plus-sign"></i> Add Document</a></p>
+                                        @foreach (var document in topic.Documents)
+                                        {
+                                            <p>
+                                                <a asp-controller="Package" asp-action="ViewDocument" asp-route-id="@document.Id" style="display: inline-block; width: 400px;">@document.Name</a>
+                                                <a class="btn btn-default btn-xs" asp-action="EditDocument" asp-route-id="@document.Id"><i class="glyphicon glyphicon-pencil"></i></a>
+                                                <a class="btn btn-default btn-xs" asp-action="DeleteDocument" asp-route-id="@document.Id"><i class="glyphicon glyphicon-trash"></i></a>
+                                            </p>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h3 style="margin-top: 40px; text-align: center;">No topics available</h3>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <h2 style="margin-top: 130px; text-align: center;">No available categories</h2>
+}
+
+

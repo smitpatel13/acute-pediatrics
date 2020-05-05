@@ -1,0 +1,108 @@
+﻿@model AcutePediatricsOrientation.ViewModels.EditDocumentViewModel
+
+@{
+    ViewData["Title"] = "Edit Document";
+}
+
+<style>
+    #fileInput {
+        opacity: 0;
+        position: absolute;
+        z-index: -1;
+    }
+</style>
+
+
+<script>
+    $(document).ready(function () {
+        function showInput() {
+            if ($("#typeInput").val() == @Html.Raw(Json.Serialize(ProjectEnum.DocumentType.PDF))) {
+                $("#fileInputGroup").show();
+                $("#urlInputGroup").hide();
+            }
+            else if ($("#typeInput").val() == @Html.Raw(Json.Serialize(ProjectEnum.DocumentType.Video))) {
+                $("#fileInputGroup").hide();
+                $("#urlInputGroup").show();
+            }
+            else {
+                $("#fileInputGroup").hide();
+                $("#urlInputGroup").hide();
+            }
+
+            $("#fileInput").val('');
+            $("#urlInput").val('');
+        }
+
+        showInput();
+
+        $("#typeInput").change(showInput);
+
+
+
+        if (@Html.Raw(Json.Serialize((int)ProjectEnum.DocumentType.PDF == Model.DocumentType))) {
+            $("#file-name").html(@Html.Raw(Json.Serialize(Model.FilePath)));
+        }
+        else {
+            $("#urlInput").val(@Html.Raw(Json.Serialize(Model.Url)));
+        }
+
+
+        $("#fileInput").change(function () {
+            var name = document.getElementById('fileInput');
+            $("#file-name").html(name.files.item(0).name);
+        });
+
+        
+    });
+</script>
+
+<h2>Edit Document</h2>
+<hr />
+<div class="row">
+    <div class="col-md-7">
+        <form class="form-horizontal" enctype="multipart/form-data" asp-action="EditDocument">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" class="form-control"/>
+            <input type="hidden" asp-for="TopicId" class="form-control" asp-items="ViewBag.TopicId" />
+            <div class="form-group">
+                <label asp-for="Name" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DocumentType" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <select asp-for="DocumentType" asp-items="Model.DocumentTypes" id="typeInput" class="form-control"></select>
+                    <span asp-validation-for="DocumentType" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group" id="urlInputGroup">
+                <label asp-for="Url" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Url" class="form-control" id="urlInput" />
+                    <span asp-validation-for="Url" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group" id="fileInputGroup">
+                <label asp-for="File" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <label class="btn btn-danger" for="fileInput">Upload File</label>
+                    <span id="file-name">No File Selected</span>
+                </div>
+                <input asp-for="File" accept="application/pdf" class="form-control" id="fileInput" />
+                <span asp-validation-for="File" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <a class="btn btn-default" asp-action="Index">Cancel</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

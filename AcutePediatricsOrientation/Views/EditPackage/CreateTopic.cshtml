@@ -1,0 +1,31 @@
+﻿@model AcutePediatricsOrientation.Models.Topic
+
+@{
+    ViewData["Title"] = "CreateTopic";
+}
+
+<h2>Create Topic</h2>
+<hr />
+<div class="row">
+    <div class="col-md-7">
+        <form class="form-horizontal" asp-action="CreateTopic">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId" />
+            <div class="form-group">
+                <label asp-for="Name" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <a class="btn btn-default" asp-action="Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,30 @@
+﻿@model AcutePediatricsOrientation.Models.Topic
+
+@{
+    ViewData["Title"] = "DeleteTopic";
+}
+
+<h2>Delete Topic</h2>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteTopic">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-default" />
+        <a class="btn btn-default" asp-action="Index">Cancel</a>
+    </form>
+</div>
